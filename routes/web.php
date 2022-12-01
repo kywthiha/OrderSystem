@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\SubCategoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +28,4 @@ require __DIR__.'/auth.php';
 
 Route::resource("categories",CategoryController::class);
 Route::resource("subcategories",SubCategoryController::class);
+Route::resource("items",ItemController::class);

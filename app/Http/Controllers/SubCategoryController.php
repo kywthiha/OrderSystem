@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSubCategoryRequest;
+use App\Interfaces\CategoryRepositoryInterface;
 use App\Interfaces\SubCategoryRepositoryInterface;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
@@ -11,10 +12,12 @@ use Illuminate\Http\Request;
 class SubCategoryController extends Controller
 {
     private SubCategoryRepositoryInterface $subCategoryRepositoryInterface;
+    private CategoryRepositoryInterface $categoryRepositoryInterface;
 
-    public function __construct(SubCategoryRepositoryInterface $subCategoryRepositoryInterface)
+    public function __construct(SubCategoryRepositoryInterface $subCategoryRepositoryInterface, CategoryRepositoryInterface $categoryRepositoryInterface)
     {
         $this->subCategoryRepositoryInterface = $subCategoryRepositoryInterface;
+        $this->categoryRepositoryInterface = $categoryRepositoryInterface;
     }
 
     /**
@@ -35,7 +38,7 @@ class SubCategoryController extends Controller
      */
     public function create()
     {
-        $categories = $this->subCategoryRepositoryInterface->getCategories();
+        $categories = $this->categoryRepositoryInterface->getCategories();
         return view('subcategory.create', compact('categories'));
     }
 
@@ -71,7 +74,7 @@ class SubCategoryController extends Controller
      */
     public function edit(SubCategory $subcategory)
     {
-        $categories = $this->subCategoryRepositoryInterface->getCategories();
+        $categories = $this->categoryRepositoryInterface->getCategories();
         return view('subcategory.edit', compact('subcategory', 'categories'));
     }
 

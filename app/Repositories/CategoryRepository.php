@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\CategoryRepositoryInterface;
 use App\Models\Category;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
@@ -31,6 +32,11 @@ class CategoryRepository implements CategoryRepositoryInterface
     {
         $category->update($data);
         return $category;
+    }
+
+    public function getCategories(): Collection
+    {
+        return Category::query()->select("id", "name")->orderBy('name')->get();
     }
 }
 

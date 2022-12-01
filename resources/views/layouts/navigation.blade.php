@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('subcategories.index')" :active="request()->routeIs('subcategories.*')">
                         {{ __('Sub Categories') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('items.index')" :active="request()->routeIs('items.*')">
+                        {{ __('Items') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -77,6 +80,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('subcategories.index')" :active="request()->routeIs('subcategories.*')">
                 {{ __('Sub Categories') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('items.index')" :active="request()->routeIs('items.*')">
+                {{ __('Items') }}
             </x-responsive-nav-link>
         </div>
 

@@ -3,10 +3,8 @@
 namespace App\Repositories;
 
 use App\Interfaces\SubCategoryRepositoryInterface;
-use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 
 class SubCategoryRepository implements SubCategoryRepositoryInterface
 {
@@ -33,11 +31,6 @@ class SubCategoryRepository implements SubCategoryRepositoryInterface
     {
         $subCategory->update($data);
         return $subCategory;
-    }
-
-    public function getCategories(): Collection
-    {
-        return Category::query()->select("id", "name")->orderBy('name')->get();
     }
 
     public function show(SubCategory $subCategory): SubCategory
