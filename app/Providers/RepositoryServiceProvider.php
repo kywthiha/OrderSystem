@@ -7,12 +7,14 @@ use App\Interfaces\CategoryRepositoryInterface;
 use App\Interfaces\OrderRepositoryInterface;
 use App\Interfaces\PackRepositoryInterface;
 use App\Interfaces\PromoCodeRepositoryInterface;
+use App\Interfaces\SubCategoryRepositoryInterface;
 use App\Interfaces\UserRepositoryInterface;
 use App\Repositories\ActivityLogRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\PackRepository;
 use App\Repositories\PromoCodeRepository;
+use App\Repositories\SubCategoryRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,6 +38,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ActivityLogRepositoryInterface::class, ActivityLogRepository::class);
 
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
+
+        $this->app->bind(SubCategoryRepositoryInterface::class, SubCategoryRepository::class);
     }
 
     /**

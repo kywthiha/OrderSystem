@@ -11,7 +11,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     public function getAll(string $search = null, $sort): LengthAwarePaginator
     {
         return Category::query()
-            ->with(['created_by'])
+            ->with(['created_by:id,name'])
             ->search($search)
             ->order($sort)
             ->paginate(10);
