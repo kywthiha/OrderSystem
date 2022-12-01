@@ -7,6 +7,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="px-4 py-5 bg-white sm:p-6">
+                        <x-flash-message />
                         <div class="text-lg font-bold">
                             Category Info
                         </div>
@@ -47,12 +48,11 @@
                         <div class="flex float-right gap-3 items-center">
                             <a href="{{ route('categories.index') }}"
                                 class="inline-flex underline items-center px-4 py-2 text-sm text-gray-800">
-                                <- Back
-                            </a>
-                            <a href="{{ route('categories.edit', $category->id) }}"
-                                class="inline-flex underline items-center px-4 py-2 text-sm text-gray-800">
-                                Edit
-                            </a>
+                                <- Back </a>
+                                    <a href="{{ route('categories.edit', $category->id) }}"
+                                        class="inline-flex underline items-center px-4 py-2 text-sm text-gray-800">
+                                        Edit
+                                    </a>
                         </div>
                     </div>
                 </div>

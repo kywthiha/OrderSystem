@@ -47,7 +47,7 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         $this->categoryRepositoryInterface->store($request->validated() + ['created_user' => $request->user()->id]);
-        return redirect(route('categories.index', ['sort' => ['created_at' => 'desc']]));
+        return redirect(route('categories.index', ['sort' => ['created_at' => 'desc']]))->with('success', 'Category created successfully!');;
     }
 
     /**
@@ -82,7 +82,7 @@ class CategoryController extends Controller
     public function update(StoreCategoryRequest $request, Category $category)
     {
         $this->categoryRepositoryInterface->update($category, $request->validated() + ['updated_user' => $request->user()->id]);
-        return redirect(route('categories.show',$category->id));
+        return redirect(route('categories.show', $category->id))->with('success', 'Category updated successfully!');;
     }
 
     /**
@@ -94,6 +94,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $this->categoryRepositoryInterface->delete($category);
-        return redirect(url()->previous());
+        return redirect(url()->previous())->with('success', 'Category deleted successfully!');
     }
 }

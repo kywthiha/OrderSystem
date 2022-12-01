@@ -13,6 +13,7 @@
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 <!-- Validation Errors -->
                                 <x-auth-validation-errors class="mb-4" :errors="$errors" />
+                                <x-flash-message />
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div class="col-span-1">
                                         <div class="text-lg font-bold">
@@ -37,8 +38,6 @@
                             </div>
                         </div>
                     </form>
-
-
                 </div>
             </div>
         </div>
