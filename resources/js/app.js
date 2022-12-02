@@ -1,7 +1,10 @@
 require('./bootstrap');
 
-import Alpine from 'alpinejs';
+import { createApp } from 'vue'
+import CategorySubCategoryInput from './components/CategorySubCategoryInput.vue'
 
-window.Alpine = Alpine;
+const app = createApp({})
 
-Alpine.start();
+app.component('category-subcategory-input', CategorySubCategoryInput)
+
+app.mount('#app')

@@ -61,7 +61,7 @@
                                         {{ $subCategory->name }}
                                     </td>
                                     <td scope="row" class="py-4 px-6">
-                                        {{ $subCategory->category->name }}
+                                        {{ $subCategory->category->name ?? '-'}}
                                     </td>
                                     <td scope="row" class="py-4 px-6">
                                         {{ $subCategory->created_at }}

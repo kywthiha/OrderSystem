@@ -4,6 +4,7 @@ namespace App\Interfaces;
 
 use App\Models\SubCategory;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 interface SubCategoryRepositoryInterface
 {
@@ -16,4 +17,6 @@ interface SubCategoryRepositoryInterface
     public function update(SubCategory $subCategory, array $data): SubCategory;
 
     public function show(SubCategory $subCategory): SubCategory;
+
+    public function getSubCategories(): Collection;
 }

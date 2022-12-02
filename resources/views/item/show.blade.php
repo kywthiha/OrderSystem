@@ -6,53 +6,71 @@
                     <div class="px-4 py-5 bg-white sm:p-6">
                         <x-flash-message />
                         <div class="text-lg font-bold">
-                            Sub Category Info
+                            Item Info
                         </div>
                         <div class="mt-3">
                             <div class="flex items-center p-2 gap-4">
                                 <div>Name:</div>
                                 <div>
-                                    {{ $subcategory->name }}
+                                    {{ $item->name }}
+                                </div>
+                            </div>
+                            <div class="flex items-center p-2 gap-4">
+                                <div>Price:</div>
+                                <div>
+                                    {{ $item->price ?? '-' }}
                                 </div>
                             </div>
                             <div class="flex items-center p-2 gap-4">
                                 <div>Category:</div>
                                 <div>
-                                    {{ $subcategory->category->name ?? '-' }}
+                                    {{ $item->category->name ?? '-' }}
+                                </div>
+                            </div>
+                            <div class="flex items-center p-2 gap-4">
+                                <div>Sub Category:</div>
+                                <div>
+                                    {{ $item->subCatgory->name ?? '-' }}
+                                </div>
+                            </div>
+                            <div class="flex items-start p-2 gap-4">
+                                <div>Description:</div>
+                                <div>
+                                    {!! nl2br(e($item->description ?? '-')) !!}
                                 </div>
                             </div>
                             <div class="flex items-center p-2 gap-4">
                                 <div>Created At:</div>
                                 <div>
-                                    {{ $subcategory->created_at ?? '-' }}
+                                    {{ $item->created_at ?? '-' }}
                                 </div>
                             </div>
                             <div class="flex items-center p-2 gap-4">
                                 <div>Created By:</div>
                                 <div>
-                                    {{ $subcategory->created_by->name ?? '-' }}
+                                    {{ $item->created_by->name ?? '-' }}
                                 </div>
                             </div>
                             <div class="flex items-center p-2 gap-4">
                                 <div>Updated At:</div>
                                 <div>
-                                    {{ $subcategory->updated_at ?? '-' }}
+                                    {{ $item->updated_at ?? '-' }}
                                 </div>
                             </div>
                             <div class="flex items-center p-2 gap-4">
                                 <div>Updated By:</div>
                                 <div>
-                                    {{ $subcategory->updated_by->name ?? '-' }}
+                                    {{ $item->updated_by->name ?? '-' }}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="px-4 py-3 sm:px-6 flex gap-5">
                         <div class="flex float-right gap-3 items-center">
-                            <a href="{{ route('subcategories.index') }}"
+                            <a href="{{ route('items.index') }}"
                                 class="inline-flex underline items-center px-4 py-2 text-sm text-gray-800">
                                 Back </a>
-                            <a href="{{ route('subcategories.edit', $subcategory->id) }}"
+                            <a href="{{ route('items.edit', $item->id) }}"
                                 class="inline-flex underline items-center px-4 py-2 text-sm text-gray-800">
                                 Edit
                             </a>

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSubCategoryRequest;
+use App\Http\Requests\StoreItemRequest;
+use App\Interfaces\CategoryRepositoryInterface;
 use App\Interfaces\ItemRepositoryInterface;
-use App\Models\SubCategory;
+use App\Interfaces\SubCategoryRepositoryInterface;
+use App\Models\Item;
 use Illuminate\Http\Request;
 
 
@@ -12,9 +14,15 @@ class ItemController extends Controller
 {
     private ItemRepositoryInterface $itemRepositoryInterface;
 
-    public function __construct(ItemRepositoryInterface $itemRepositoryInterface)
+    private CategoryRepositoryInterface $categoryRepositoryInterface;
+
+    private SubCategoryRepositoryInterface $subCategoryRepositoryInterface;
+
+    public function __construct(ItemRepositoryInterface $itemRepositoryInterface, CategoryRepositoryInterface $categoryRepositoryInterface, SubCategoryRepositoryInterface $subCategoryRepositoryInterface)
     {
         $this->itemRepositoryInterface = $itemRepositoryInterface;
+        $this->categoryRepositoryInterface = $categoryRepositoryInterface;
+        $this->subCategoryRepositoryInterface = $subCategoryRepositoryInterface;
     }
 
     /**
@@ -36,7 +44,8 @@ class ItemController extends Controller
     public function create()
     {
         $categories = $this->categoryRepositoryInterface->getCategories();
-        return view('subcategory.create', compact('categories'));
+        $subCategories = $this->subCategoryRepositoryInterface->getSubCategories();
+        return view('item.create', compact('categories', 'subCategories'));
     }
 
     /**
@@ -45,58 +54,59 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StoreSubCategoryRequest $request)
+    public function store(StoreItemRequest $request)
     {
-        $this->subCategoryRepositoryInterface->store($request->validated() + ['created_user' => $request->user()->id]);
-        return redirect(route('subcategories.index', ['sort' => ['created_at' => 'desc']]))->with('success', 'SubCategory created successfully!');;
+        $item = $this->itemRepositoryInterface->store($request->validated() + ['created_user' => $request->user()->id]);
+        return redirect(route('items.show', $item))->with('success', 'Item created successfully!');;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SubCategory  $subcategory
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\View\View
      */
-    public function show(SubCategory $subcategory)
+    public function show(Item $item)
     {
-        $subcategory = $this->subCategoryRepositoryInterface->show($subcategory);
-        return view('subcategory.show', compact('subcategory'));
+        $item = $this->itemRepositoryInterface->show($item);
+        return view('item.show', compact('item'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SubCategory  $subcategory
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\View\View
      */
-    public function edit(SubCategory $subcategory)
+    public function edit(Item $item)
     {
         $categories = $this->categoryRepositoryInterface->getCategories();
-        return view('subcategory.edit', compact('subcategory', 'categories'));
+        $subCategories = $this->subCategoryRepositoryInterface->getSubCategories();
+        return view('item.edit', compact('item', 'categories', 'subCategories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SubCategory  $subcategory
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(StoreSubCategoryRequest $request, SubCategory $subcategory)
+    public function update(StoreItemRequest $request, Item $item)
     {
-        $this->subCategoryRepositoryInterface->update($subcategory, $request->validated() + ['updated_user' => $request->user()->id]);
-        return redirect(route('subcategories.show', $subcategory->id))->with('success', 'SubCategory updated successfully!');;
+        $this->itemRepositoryInterface->update($item, $request->validated() + ['updated_user' => $request->user()->id]);
+        return redirect(route('items.show', $item->id))->with('success', 'Item updated successfully!');;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SubCategory  $subCategory
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(SubCategory $subcategory)
+    public function destroy(Item $item)
     {
-        $this->subCategoryRepositoryInterface->delete($subcategory);
-        return redirect(url()->previous())->with('success', 'SubCategory deleted successfully!');
+        $this->itemRepositoryInterface->delete($item);
+        return redirect(url()->previous())->with('success', 'Item deleted successfully!');
     }
 }

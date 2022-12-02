@@ -41,7 +41,7 @@ class ItemRepository implements ItemRepositoryInterface
 
     public function show(Item $item): Item
     {
-        $item->load(['created_by:id,name', 'updated_by:id,name', 'category:id,name']);
+        $item->load(['created_by:id,name', 'updated_by:id,name', 'category:id,name','subCategory:id,name']);
         return $item;
     }
 }

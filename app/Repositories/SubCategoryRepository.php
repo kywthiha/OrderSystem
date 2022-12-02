@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\SubCategoryRepositoryInterface;
 use App\Models\SubCategory;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class SubCategoryRepository implements SubCategoryRepositoryInterface
 {
@@ -37,5 +38,10 @@ class SubCategoryRepository implements SubCategoryRepositoryInterface
     {
         $subCategory->load(['created_by:id,name', 'updated_by:id,name', 'category:id,name']);
         return $subCategory;
+    }
+
+    public function getSubCategories(): Collection
+    {
+        return SubCategory::query()->select("id", "name", "category_id")->orderBy('name')->get();
     }
 }

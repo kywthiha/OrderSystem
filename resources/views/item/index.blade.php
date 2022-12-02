@@ -61,7 +61,7 @@
                             @forelse ($items as $item)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <td scope="row" class="py-4 px-6">
-                                        <a href="{{ route('subcategories.show', $item) }}" class="underline">
+                                        <a href="{{ route('items.show', $item) }}" class="underline">
                                             #{{ $item->id }}
                                         </a>
                                     </td>
@@ -82,14 +82,14 @@
                                     </td>
                                     <td class="py-4 px-6 text-right">
                                         <div class="flex float-right gap-3 items-center">
-                                            <a href="{{ route('subcategories.edit', $item->id) }}"
+                                            <a href="{{ route('items.edit', $item->id) }}"
                                                 class="inline-flex underline items-center px-4 py-2 text-sm text-gray-800">
                                                 Edit
                                             </a>
 
 
                                             <form method="POST"
-                                                action="{{ route('subcategories.destroy', $item->id) }}"
+                                                action="{{ route('items.destroy', $item->id) }}"
                                                 onsubmit="return confirm('Are you sure delete?');">
                                                 @csrf
                                                 @method('DELETE')
