@@ -3,13 +3,12 @@
 namespace App\Repositories;
 
 use App\Interfaces\ItemRepositoryInterface;
-use App\Models\Category;
 use App\Models\Item;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ItemRepository implements ItemRepositoryInterface
 {
-    public function getAll(string $search = null, $sort): LengthAwarePaginator
+    public function getAll(string $search = null, $sort, $filter = null): LengthAwarePaginator
     {
         return Item::query()
             ->select('items.*', 'categories.name as category_name', 'sub_categories.name as sub_category_name', 'users.name as created_user_name')
@@ -18,6 +17,7 @@ class ItemRepository implements ItemRepositoryInterface
             ->leftJoin('users', 'users.id', '=', 'items.created_user')
             ->search($search)
             ->order($sort)
+            ->filter($filter)
             ->whereNull('categories.deleted_at')
             ->whereNull('sub_categories.deleted_at')
             ->paginate(10);
@@ -41,7 +41,7 @@ class ItemRepository implements ItemRepositoryInterface
 
     public function show(Item $item): Item
     {
-        $item->load(['created_by:id,name', 'updated_by:id,name', 'category:id,name','subCategory:id,name']);
+        $item->load(['created_by:id,name', 'updated_by:id,name', 'category:id,name', 'subCategory:id,name']);
         return $item;
     }
 }

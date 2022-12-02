@@ -9,11 +9,12 @@ use Illuminate\Support\Collection;
 
 class SubCategoryRepository implements SubCategoryRepositoryInterface
 {
-    public function getAll(string $search = null, $sort): LengthAwarePaginator
+    public function getAll(string $search = null, $sort, $filter = null): LengthAwarePaginator
     {
         return SubCategory::query()
             ->with(['created_by:id,name', 'category:id,name'])
             ->search($search)
+            ->filter($filter)
             ->order($sort)
             ->paginate(10);
     }

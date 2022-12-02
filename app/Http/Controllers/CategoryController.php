@@ -6,7 +6,6 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Interfaces\CategoryRepositoryInterface;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 
 class CategoryController extends Controller
 {

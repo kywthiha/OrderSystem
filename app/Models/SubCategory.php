@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SubCategory extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -47,6 +47,17 @@ class SubCategory extends Model
         if ($data && is_array($data)) {
             foreach ($data as $key => $value) {
                 $query->orderBy($key, $value);
+            }
+        }
+    }
+
+    public function scopeFilter($query,  $data)
+    {
+        if ($data && is_array($data)) {
+            foreach ($data as $key => $value) {
+                if ($value) {
+                    $query->where($key, $value);
+                }
             }
         }
     }

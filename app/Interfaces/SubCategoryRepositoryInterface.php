@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 
 interface SubCategoryRepositoryInterface
 {
-    public function getAll(string $search = null, $sort): LengthAwarePaginator;
+    public function getAll(string $search = null, $sort, $filter = null): LengthAwarePaginator;
 
     public function delete(SubCategory $subCategory): void;
 

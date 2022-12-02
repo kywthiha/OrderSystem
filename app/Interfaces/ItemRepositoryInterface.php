@@ -7,7 +7,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface ItemRepositoryInterface
 {
-    public function getAll(string $search = null, $sort): LengthAwarePaginator;
+    public function getAll(string $search = null, $sort, $filter = null): LengthAwarePaginator;
 
     public function delete(Item $item): void;
 

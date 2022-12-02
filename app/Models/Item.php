@@ -59,4 +59,15 @@ class Item extends Model
             }
         }
     }
+
+    public function scopeFilter($query,  $data)
+    {
+        if ($data && is_array($data)) {
+            foreach ($data as $key => $value) {
+                if ($value) {
+                    $query->where($key, $value);
+                }
+            }
+        }
+    }
 }
