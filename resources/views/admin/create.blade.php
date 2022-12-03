@@ -58,6 +58,34 @@
                                             <input required type="password" name="password_confirmation"
                                                 class="mt-1 focus:ring-cyan-500 focus:border-cyan-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                                         </div>
+                                        <div class="mt-3">
+                                            <label class="block text-sm font-semibold ">
+                                                Roles
+                                            </label>
+                                            <ul>
+                                                @foreach ($roles as $role)
+                                                    <li class="mb-2">
+                                                        <label class="flex items-center gap-2 mb-1">
+                                                            <input type="checkbox" name="roles[]"
+                                                                value="{{ $role->id }}"
+                                                                {{ in_array($role->id, old('roles', [])) ? 'checked' : '' }}
+                                                                class="mt-1 focus:ring-cyan-500 focus:border-cyan-500   shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                                                            <p>
+                                                                {{ $role->name }}
+                                                            </p>
+
+                                                        </label>
+                                                        <div class="flex flex-wrap gap-2">
+                                                            @foreach ($role->permissions as $permission)
+                                                                <span
+                                                                    class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">{{ $permission->name ?? '-' }}</span>
+                                                            @endforeach
+                                                        </div>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+
+                                        </div>
 
                                     </div>
                                 </div>

@@ -11,7 +11,7 @@ interface AdminRepositoryInterface
 
     public function delete(User $user): void;
 
-    public function store(array $data): User;
+    public function store(array $data, array $roles): User;
 
     public function update(User $user, array $data): User;
 

@@ -57,7 +57,7 @@ class ItemController extends Controller
     public function store(StoreItemRequest $request)
     {
         $item = $this->itemRepositoryInterface->store($request->validated() + ['created_user' => $request->user()->id]);
-        return redirect(route('items.show', $item))->with('success', 'Item created successfully!');;
+        return redirect(route('items.show', $item))->with('success', 'Item created successfully!');
     }
 
     /**

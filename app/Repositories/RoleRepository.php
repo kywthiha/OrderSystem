@@ -72,4 +72,9 @@ class RoleRepository implements RoleRepositoryInterface
         return Permission::query()->select('id', 'name')->orderBy('name')->get();
     }
 
+    public function getRoles() : Collection
+    {
+        return Role::query()->with(['permissions:id,name'])->select('id', 'name')->orderBy('name')->get();
+    }
+
 }

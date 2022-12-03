@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAdminRequest;
 use App\Interfaces\AdminRepositoryInterface;
 use App\Models\Item;
+use App\Repositories\RoleRepository;
 use Illuminate\Http\Request;
 
 
 class AdminController extends Controller
 {
     private AdminRepositoryInterface $adminRepositoryInterface;
+    private RoleRepository $roleRepositoryInterface;
 
-    public function __construct(AdminRepositoryInterface $adminRepositoryInterface)
+    public function __construct(AdminRepositoryInterface $adminRepositoryInterface, RoleRepository $roleRepositoryInterface)
     {
         $this->adminRepositoryInterface = $adminRepositoryInterface;
+        $this->roleRepositoryInterface = $roleRepositoryInterface;
     }
 
     /**
@@ -35,7 +38,8 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('admin.create');
+        $roles = $this->roleRepositoryInterface->getRoles();
+        return view('admin.create',compact('roles'));
     }
 
     /**
@@ -46,8 +50,8 @@ class AdminController extends Controller
      */
     public function store(StoreAdminRequest $request)
     {
-        $item = $this->adminRepositoryInterface->store($request->validated() + ['created_user' => $request->user()->id]);
-        return redirect(route('admins.index', ['sort' => ['created_at' => 'desc']]))->with('success', 'User created successfully!');;
+        $item = $this->adminRepositoryInterface->store($request->validated() + ['created_user' => $request->user()->id],$request->roles);
+        return redirect(route('admins.show', $item))->with('success', 'User created successfully!');
     }
 
     /**

@@ -65,7 +65,7 @@
                                     </td>
                                     <td class="py-4 px-6 text-right">
                                         <div class="flex float-right gap-3 items-center">
-                                            @if (!Auth::user()->roles()->pluck('roles.id')->contains($role->id))
+                                            @if (!Auth::user()->roles->pluck('id')->contains($role->id))
                                                 <a href="{{ route('roles.edit', $role->id) }}"
                                                     class="inline-flex underline items-center px-4 py-2 text-sm text-gray-800">
                                                     Edit

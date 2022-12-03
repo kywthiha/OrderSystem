@@ -19,4 +19,5 @@ interface RoleRepositoryInterface
     public function show(Role $role): Role;
 
     public function getPermissions(): Collection;
+    public function getRoles(): Collection;
 }

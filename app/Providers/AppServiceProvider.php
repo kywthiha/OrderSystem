@@ -39,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
             foreach ($permissionsArray as $name => $roles) {
                 Gate::define($name, function ($user) use ($roles) {
                     // We check if we have the needed roles among current user's roles
-                    return count(array_intersect($user->roles()->pluck('roles.id')->toArray(), $roles)) > 0;
+                    return count(array_intersect($user->roles->pluck('id')->toArray(), $roles)) > 0;
                 });
             }
         }

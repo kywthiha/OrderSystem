@@ -17,7 +17,7 @@
                             </div>
                             <div class="flex items-center p-2 gap-4">
                                 <div>Permisson:</div>
-                                <div>
+                                <div class="flex flex-wrap gap-2">
                                     @foreach ($role->permissions as $permission)
                                         <span
                                             class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">{{ $permission->name ?? '-' }}</span>

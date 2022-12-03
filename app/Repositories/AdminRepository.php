@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\AdminRepositoryInterface;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AdminRepository implements AdminRepositoryInterface
@@ -24,14 +25,23 @@ class AdminRepository implements AdminRepositoryInterface
         $user->delete();
     }
 
-    public function store(array $data): User
+    public function store(array $data, array $roles): User
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'is_admin' => true,
-        ]);
+        DB::beginTransaction();
+        try {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'is_admin' => true,
+            ]);
+            $user->roles()->attach($roles);
+            DB::commit();
+            return $user;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
 
     public function update(User $user, array $data): User
