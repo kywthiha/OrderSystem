@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAdminRequest;
+use App\Http\Requests\StoreRoleRequest;
 use App\Interfaces\RoleRepositoryInterface;
 use App\Models\Item;
 use App\Models\Role;
@@ -36,7 +37,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('admin.create');
+        $permissons = $this->roleRepositoryInterface->getPermissions();
+        return view('role.create', compact('permissons'));
     }
 
     /**
@@ -45,10 +47,11 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StoreAdminRequest $request)
+    public function store(StoreRoleRequest $request)
     {
-        $item = $this->adminRepositoryInterface->store($request->validated() + ['created_user' => $request->user()->id]);
-        return redirect(route('admins.index', ['sort' => ['created_at' => 'desc']]))->with('success', 'User created successfully!');;
+
+        $role = $this->roleRepositoryInterface->store(['created_user' => $request->user()->id, 'name' => $request->name], $request->permissions);
+        return redirect(route('roles.show', $role))->with('success', 'Role created successfully!');;
     }
 
     /**
@@ -66,38 +69,37 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\View\View
      */
-    public function edit(Item $item)
+    public function edit(Role $role)
     {
-        $categories = $this->categoryRepositoryInterface->getCategories();
-        $subCategories = $this->subCategoryRepositoryInterface->getSubCategories();
-        return view('item.edit', compact('item', 'categories', 'subCategories'));
+        $permissons = $this->roleRepositoryInterface->getPermissions();
+        return view('role.edit', compact('role', 'permissons'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(StoreItemRequest $request, Item $item)
+    public function update(StoreRoleRequest $request, Role $role)
     {
-        $this->itemRepositoryInterface->update($item, $request->validated() + ['updated_user' => $request->user()->id]);
-        return redirect(route('items.show', $item->id))->with('success', 'Item updated successfully!');;
+        $this->roleRepositoryInterface->update($role, ['created_user' => $request->user()->id, 'name' => $request->name], $request->permissions);
+        return redirect(route('roles.show', $role->id))->with('success', 'Role updated successfully!');;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Item  $item
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Item $item)
+    public function destroy(Role $role)
     {
-        $this->itemRepositoryInterface->delete($item);
-        return redirect(url()->previous())->with('success', 'Item deleted successfully!');
+        $this->roleRepositoryInterface->delete($role);
+        return redirect(url()->previous())->with('success', 'Role deleted successfully!');
     }
 }

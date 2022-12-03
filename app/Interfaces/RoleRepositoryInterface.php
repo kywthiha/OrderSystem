@@ -4,6 +4,7 @@ namespace App\Interfaces;
 
 use App\Models\Role;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 interface RoleRepositoryInterface
 {
@@ -16,4 +17,6 @@ interface RoleRepositoryInterface
     public function update(Role $role, array $data, array $permissions): Role;
 
     public function show(Role $role): Role;
+
+    public function getPermissions(): Collection;
 }

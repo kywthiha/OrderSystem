@@ -46,6 +46,11 @@ class PermissionSeeder extends Seeder
                 'name' => 'manage_admins',
                 'created_at' => $now,
                 'updated_at' => $now,
+            ],
+            [
+                'name' => 'manage_roles',
+                'created_at' => $now,
+                'updated_at' => $now,
             ]
         ];
         Permission::query()->insert($permissions);

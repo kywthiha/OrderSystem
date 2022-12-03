@@ -35,5 +35,5 @@ Route::group(['middleware' => ['auth', 'admin.auth']], function () {
     Route::resource("items", ItemController::class)->middleware('can:manage_items');
     Route::get('users', [UserController::class, 'index'])->name('users.index')->middleware('can:manage_users');
     Route::resource("admins", AdminController::class)->middleware('can:manage_admins');
-    Route::resource("roles", RoleController::class);
+    Route::resource("roles", RoleController::class)->middleware('can:manage_roles');
 });

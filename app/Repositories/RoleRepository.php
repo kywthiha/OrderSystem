@@ -3,8 +3,10 @@
 namespace App\Repositories;
 
 use App\Interfaces\RoleRepositoryInterface;
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class RoleRepository implements RoleRepositoryInterface
@@ -22,7 +24,7 @@ class RoleRepository implements RoleRepositoryInterface
     {
         DB::beginTransaction();
         try {
-            $role->permissions()->delete();
+            $role->permissions()->detach();
             $role->delete();
             DB::commit();
         } catch (\Exception $e) {
@@ -64,4 +66,10 @@ class RoleRepository implements RoleRepositoryInterface
         $role->load(['created_by:id,name', 'updated_by:id,name', 'permissions:id,name']);
         return $role;
     }
+
+    public function getPermissions() : Collection
+    {
+        return Permission::query()->select('id', 'name')->orderBy('name')->get();
+    }
+
 }

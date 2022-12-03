@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-search>
-        <x-nav-link :href="route('admins.create')">
+        <x-nav-link :href="route('roles.create')">
             {{ __('New Role') }}
         </x-nav-link>
     </x-search>
@@ -65,26 +65,29 @@
                                     </td>
                                     <td class="py-4 px-6 text-right">
                                         <div class="flex float-right gap-3 items-center">
-                                            <a href="{{ route('roles.edit', $role->id) }}"
-                                                class="inline-flex underline items-center px-4 py-2 text-sm text-gray-800">
-                                                Edit
-                                            </a>
+                                            @if (!Auth::user()->roles()->pluck('roles.id')->contains($role->id))
+                                                <a href="{{ route('roles.edit', $role->id) }}"
+                                                    class="inline-flex underline items-center px-4 py-2 text-sm text-gray-800">
+                                                    Edit
+                                                </a>
 
 
-                                            <form method="POST" action="{{ route('roles.destroy', $role->id) }}"
-                                                onsubmit="return confirm('Are you sure delete?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    class="inline-flex items-center underline text-red-800 px-4 py-2 text-sm">
-                                                    Delete
-                                                </button>
-                                            </form>
+                                                <form method="POST" action="{{ route('roles.destroy', $role->id) }}"
+                                                    onsubmit="return confirm('Are you sure delete?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="inline-flex items-center underline text-red-800 px-4 py-2 text-sm">
+                                                        Delete
+                                                    </button>
+                                                </form>
                                         </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <p>Empty Role</p>
+                            @endif
+
+                            </td>
+                            </tr>
+                        @empty
+                            <p>Empty Role</p>
                             @endforelse
 
 

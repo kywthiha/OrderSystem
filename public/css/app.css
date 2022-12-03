@@ -782,6 +782,9 @@ select {
 .mt-6 {
   margin-top: 1.5rem;
 }
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
 .block {
   display: block;
 }
@@ -929,6 +932,9 @@ select {
 }
 .gap-6 {
   gap: 1.5rem;
+}
+.gap-2 {
+  gap: 0.5rem;
 }
 .space-x-8 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
