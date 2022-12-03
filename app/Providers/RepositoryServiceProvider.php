@@ -9,6 +9,7 @@ use App\Interfaces\ItemRepositoryInterface;
 use App\Interfaces\OrderRepositoryInterface;
 use App\Interfaces\PackRepositoryInterface;
 use App\Interfaces\PromoCodeRepositoryInterface;
+use App\Interfaces\RoleRepositoryInterface;
 use App\Interfaces\SubCategoryRepositoryInterface;
 use App\Interfaces\UserRepositoryInterface;
 use App\Repositories\ActivityLogRepository;
@@ -18,6 +19,7 @@ use App\Repositories\ItemRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\PackRepository;
 use App\Repositories\PromoCodeRepository;
+use App\Repositories\RoleRepository;
 use App\Repositories\SubCategoryRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
@@ -48,6 +50,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ItemRepositoryInterface::class, ItemRepository::class);
 
         $this->app->bind(AdminRepositoryInterface::class, AdminRepository::class);
+
+        $this->app->bind(RoleRepositoryInterface::class, RoleRepository::class);
     }
 
     /**

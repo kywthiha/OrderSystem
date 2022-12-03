@@ -82,4 +82,9 @@ class User extends Authenticatable
     {
         return $query->where('is_admin', false);
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 }

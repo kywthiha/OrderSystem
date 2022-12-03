@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -28,10 +29,11 @@ Route::get('/dashboard', function () {
 
 require __DIR__ . '/auth.php';
 
-Route::group(['middleware' => ['auth','admin.auth']], function () {
-    Route::resource("categories", CategoryController::class);
-    Route::resource("subcategories", SubCategoryController::class);
-    Route::resource("items", ItemController::class);
-    Route::get('users', [UserController::class, 'index'])->name('users.index');
-    Route::resource("admins", AdminController::class);
+Route::group(['middleware' => ['auth', 'admin.auth']], function () {
+    Route::resource("categories", CategoryController::class)->middleware('can:manage_categories');
+    Route::resource("subcategories", SubCategoryController::class)->middleware('can:manage_subcategories');
+    Route::resource("items", ItemController::class)->middleware('can:manage_items');
+    Route::get('users', [UserController::class, 'index'])->name('users.index')->middleware('can:manage_users');
+    Route::resource("admins", AdminController::class)->middleware('can:manage_admins');
+    Route::resource("roles", RoleController::class);
 });
