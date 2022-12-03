@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ItemController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\SubCategoryController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -52,7 +53,9 @@ Route::group(['middleware' => ['auth:api', 'user.auth']], function () {
         Route::get('/{item}', [ItemController::class, 'show'])->name('show');
     });
 
-    Route::group(['prefix' => 'order', 'as' => 'order.'], function () {
-
+    Route::group(['prefix' => 'orders', 'as' => 'order.'], function () {
+        Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::post('/', [OrderController::class, 'store'])->name('store');
+        Route::get('/{order}', [OrderController::class, 'show'])->name('show')->middleware('can:view,order');;
     });
 });

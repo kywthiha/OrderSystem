@@ -1,28 +1,35 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\StoreOrderRequest;
 use App\Interfaces\OrderRepositoryInterface;
-use App\Interfaces\PromoCodeRepositoryInterface;
 use App\Models\Order;
-use App\Models\Pack;
-use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class OrderController extends Controller
+class OrderController extends BaseApiController
 {
 
     private OrderRepositoryInterface $orderRepository;
-    private PromoCodeRepositoryInterface $promoCodeRepository;
-    private OrderService $orderService;
-
-    public function __construct(OrderRepositoryInterface $orderRepository, PromoCodeRepositoryInterface $promoCodeRepositoryInterface, OrderService $orderService)
+    public function __construct(OrderRepositoryInterface $orderRepository)
     {
         $this->orderRepository = $orderRepository;
-        $this->promoCodeRepository = $promoCodeRepositoryInterface;
-        $this->orderService = $orderService;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(Request $request)
+    {
+        $orders = $this->orderRepository->getAll($request->q, $request->sort, ["user_id" => auth()->user()->id]);
+        return  response()
+            ->json([
+                "errorCode" => 0,
+                "message" => "Success",
+                'data' =>  $orders,
+            ], Response::HTTP_OK);
     }
 
 
@@ -31,32 +38,15 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreOrderRequest $request)
+    public function store(Request $request)
     {
         try {
-            $orderDetails = $request->validated();
-
-            if(isset($orderDetails['promo_code'])){
-                $promoCode = $this->promoCodeRepository->getPromoCodeByCode($orderDetails['promo_code']);
-
-                if ($promoCode) {
-                    $orderDetails['promo_code'] = $promoCode;
-                } else {
-                    return response()
-                        ->json([
-                            "errorCode" => 1,
-                            "message" => "Promo code not found",
-                        ], Response::HTTP_NOT_FOUND);
-                }
-            }
-
-
-            $order = $this->orderRepository->storeOrder([
-                'order_packs' => $orderDetails['order_packs'],
+            $order = $this->orderRepository->store([
                 'user_id' => auth()->id(),
-            ] + $this->orderService->calculateOrder($orderDetails));
+                'note' => $request->note
+            ], $request->orderItems);
 
             return response()
                 ->json([
@@ -71,5 +61,22 @@ class OrderController extends Controller
                     "message" => $e->getMessage(),
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Order  $order
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show(Order $order)
+    {
+        $order = $this->orderRepository->show($order);
+        return  response()
+            ->json([
+                "errorCode" => 0,
+                "message" => "Success",
+                'data' =>  $order,
+            ], Response::HTTP_OK);
     }
 }
