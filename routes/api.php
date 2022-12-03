@@ -3,7 +3,6 @@
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ItemController;
 use App\Http\Controllers\Api\SubCategoryController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +53,6 @@ Route::group(['middleware' => ['auth:api', 'user.auth']], function () {
     });
 
     Route::group(['prefix' => 'order', 'as' => 'order.'], function () {
-        Route::post('/', [OrderController::class, 'store'])->name('store');
+
     });
 });
