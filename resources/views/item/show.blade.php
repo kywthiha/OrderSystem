@@ -18,7 +18,7 @@
                             <div class="flex items-center p-2 gap-4">
                                 <div>Price:</div>
                                 <div>
-                                    {{ $item->price ?? '-' }}
+                                    @numberFormat($item->price  ?? 0) MMK
                                 </div>
                             </div>
                             <div class="flex items-center p-2 gap-4">

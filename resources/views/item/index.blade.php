@@ -28,6 +28,13 @@
                                 </th>
                                 <th scope="col" class="py-3 px-6 text-left ">
                                     <div class="flex">
+                                        Price
+                                        <x-sort-link sortKey="price" />
+                                    </div>
+
+                                </th>
+                                <th scope="col" class="py-3 px-6 text-left ">
+                                    <div class="flex">
                                         Category
                                         <x-sort-link sortKey="category_name" />
                                     </div>
@@ -67,6 +74,9 @@
                                     </td>
                                     <td scope="row" class="py-4 px-6">
                                         {{ $item->name }}
+                                    </td>
+                                    <td scope="row" class="py-4 px-6">
+                                        @numberFormat($item->price  ?? 0) MMK
                                     </td>
                                     <td scope="row" class="py-4 px-6">
                                         {{ $item->category_name }}

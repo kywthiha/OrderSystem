@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('orders.index') }}">
                         <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
                     </a>
                 </div>
@@ -13,7 +13,7 @@
                 <!-- Navigation Links -->
                 <div class=" space-x-8 sm:-my-px sm:ml-10 sm:flex">
 
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.*')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     @can('manage_items')

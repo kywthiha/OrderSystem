@@ -6,12 +6,14 @@ namespace App\Providers;
 use App\Interfaces\AdminRepositoryInterface;
 use App\Interfaces\CategoryRepositoryInterface;
 use App\Interfaces\ItemRepositoryInterface;
+use App\Interfaces\OrderRepositoryInterface;
 use App\Interfaces\RoleRepositoryInterface;
 use App\Interfaces\SubCategoryRepositoryInterface;
 use App\Interfaces\UserRepositoryInterface;
 use App\Repositories\AdminRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\ItemRepository;
+use App\Repositories\OrderRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\SubCategoryRepository;
 use App\Repositories\UserRepository;
@@ -37,6 +39,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AdminRepositoryInterface::class, AdminRepository::class);
 
         $this->app->bind(RoleRepositoryInterface::class, RoleRepository::class);
+
+        $this->app->bind(OrderRepositoryInterface::class, OrderRepository::class);
     }
 
     /**

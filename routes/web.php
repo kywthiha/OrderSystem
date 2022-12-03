@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\UserController;
@@ -20,11 +21,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect(route('dashboard'));
+    return redirect(route('orders.index'));
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect(route('orders.index'));
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
@@ -36,4 +37,5 @@ Route::group(['middleware' => ['auth', 'admin.auth']], function () {
     Route::resource('users', UserController::class)->middleware('can:manage_users');
     Route::resource("admins", AdminController::class)->middleware('can:manage_admins');
     Route::resource("roles", RoleController::class)->middleware('can:manage_roles');
+    Route::resource("orders", OrderController::class)->middleware('can:manage_admins');
 });
