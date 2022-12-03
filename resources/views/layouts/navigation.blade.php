@@ -12,28 +12,40 @@
 
                 <!-- Navigation Links -->
                 <div class=" space-x-8 sm:-my-px sm:ml-10 sm:flex">
+
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-
-                    <x-nav-link :href="route('items.index')" :active="request()->routeIs('items.*')">
-                        {{ __('Items') }}
-                    </x-nav-link>
+                    @can('manage_items')
+                        <x-nav-link :href="route('items.index')" :active="request()->routeIs('items.*')">
+                            {{ __('Items') }}
+                        </x-nav-link>
+                    @endcan
+                    @can('manage_users')
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
                         {{ __('Users') }}
                     </x-nav-link>
+                    @endcan
+                    @can('manage_admins')
                     <x-nav-link :href="route('admins.index')" :active="request()->routeIs('admins.*')">
                         {{ __('Admins') }}
                     </x-nav-link>
+                    @endcan
+                    @can('manage_roles')
                     <x-nav-link :href="route('roles.index')" :active="request()->routeIs('roles.*')">
                         {{ __('Roles') }}
                     </x-nav-link>
+                    @endcan
+                    @can('manage_categories')
                     <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
                         {{ __('category.title') }}
                     </x-nav-link>
+                    @endcan
+                    @can('manage_subcategories')
                     <x-nav-link :href="route('subcategories.index')" :active="request()->routeIs('subcategories.*')">
                         {{ __('Sub Categories') }}
                     </x-nav-link>
+                    @endcan
                 </div>
             </div>
 

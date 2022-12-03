@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
-use App\Models\Item;
 use App\Models\SubCategory;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
@@ -16,14 +16,12 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $category = Category::factory()
-            ->has(SubCategory::factory()->count(1))
-            ->create();
-
-        Item::factory()
-            ->count(30)
-            ->for($category)
-            ->for($category->subCategory->first())
+        $user = User::query()->isAdmin()->first();
+        Category::factory([
+            "created_user" => $user->id
+            ])
+            ->has(SubCategory::factory(["created_user" => $user->id])->count(2))
+            ->count(10)
             ->create();
     }
 }

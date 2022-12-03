@@ -17,7 +17,6 @@ class ItemFactory extends Factory
             'name' => $this->faker->name(),
             'description' => $this->faker->text(),
             'price' => $this->faker->randomNumber(3),
-            'created_user' => 1
         ];
     }
 }

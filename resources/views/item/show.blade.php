@@ -30,7 +30,7 @@
                             <div class="flex items-center p-2 gap-4">
                                 <div>Sub Category:</div>
                                 <div>
-                                    {{ $item->subCatgory->name ?? '-' }}
+                                    {{ $item->subCategory->name ?? '-' }}
                                 </div>
                             </div>
                             <div class="flex items-start p-2 gap-4">

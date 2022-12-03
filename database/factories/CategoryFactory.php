@@ -15,7 +15,6 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'created_user' => 1
         ];
     }
 }

@@ -16,12 +16,15 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $now = Carbon::now();
+        $permissions = Permission::query()->select('id', 'name')->get();
         $role = Role::query()->create([
             'name' => 'admin',
-            'created_at' => $now,
-            'updated_at' => $now,
         ]);
-        $role->permissions()->attach(Permission::query()->pluck('id'));
+        $role->permissions()->attach($permissions->pluck('id'));
+
+        $role = Role::query()->create([
+            'name' => 'standard',
+        ]);
+        $role->permissions()->attach($permissions->whereIn('name', ['manage_items', 'manage_categories', 'manage_subcategories', 'manage_orders'])->pluck('id'));
     }
 }

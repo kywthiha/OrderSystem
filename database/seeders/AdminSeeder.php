@@ -16,12 +16,20 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
+        $roles = Role::query()->select('id', 'name')->get();
         $user = User::query()->create([
             'name' => 'Admin',
             'email' => 'admin@kyawthiha.com',
             'password' => Hash::make('password'),
             'is_admin' => true,
         ]);
-        $user->roles()->attach(Role::query()->pluck('id'));
+        $user->roles()->attach([$roles->first()->id]);
+        $user = User::query()->create([
+            'name' => 'standard',
+            'email' => 'standard@kyawthiha.com',
+            'password' => Hash::make('password'),
+            'is_admin' => true,
+        ]);
+        $user->roles()->attach([$roles->last()->id]);
     }
 }
