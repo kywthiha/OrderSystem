@@ -21,6 +21,8 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
+        'created_user',
+        'updated_user'
     ];
 
     /**
@@ -86,5 +88,15 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    public function created_by()
+    {
+        return $this->belongsTo(User::class, 'created_user');
+    }
+
+    public function updated_by()
+    {
+        return $this->belongsTo(User::class, 'updated_user');
     }
 }

@@ -6,71 +6,73 @@
                     <div class="px-4 py-5 bg-white sm:p-6">
                         <x-flash-message />
                         <div class="text-lg font-bold">
-                            Item Info
+                            User Info
                         </div>
                         <div class="mt-3">
                             <div class="flex items-center p-2 gap-4">
                                 <div>Name:</div>
                                 <div>
-                                    {{ $item->name }}
+                                    {{ $admin->name }}
                                 </div>
                             </div>
-                            <div class="flex items-center p-2 gap-4">
-                                <div>Price:</div>
+                            <div class="flex p-2 gap-4">
+                                <div>Roles:</div>
                                 <div>
-                                    {{ $item->price ?? '-' }}
+                                    <ul>
+                                        @foreach ($admin->roles as $role)
+                                            <li class="mb-2">
+                                                <label class="flex items-center gap-2 mb-1">
+                                                    <p>
+                                                        {{ $role->name }}
+                                                    </p>
+
+                                                </label>
+                                                <div class="flex flex-wrap gap-2">
+                                                    @foreach ($role->permissions as $permission)
+                                                        <span
+                                                            class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">{{ $permission->name ?? '-' }}</span>
+                                                    @endforeach
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+
                                 </div>
+
                             </div>
-                            <div class="flex items-center p-2 gap-4">
-                                <div>Category:</div>
-                                <div>
-                                    {{ $item->category->name ?? '-' }}
-                                </div>
-                            </div>
-                            <div class="flex items-center p-2 gap-4">
-                                <div>Sub Category:</div>
-                                <div>
-                                    {{ $item->subCatgory->name ?? '-' }}
-                                </div>
-                            </div>
-                            <div class="flex items-start p-2 gap-4">
-                                <div>Description:</div>
-                                <div>
-                                    {!! nl2br(e($item->description ?? '-')) !!}
-                                </div>
-                            </div>
+
                             <div class="flex items-center p-2 gap-4">
                                 <div>Created At:</div>
                                 <div>
-                                    {{ $item->created_at ?? '-' }}
+                                    {{ $admin->created_at ?? '-' }}
                                 </div>
                             </div>
                             <div class="flex items-center p-2 gap-4">
                                 <div>Created By:</div>
                                 <div>
-                                    {{ $item->created_by->name ?? '-' }}
+                                    {{ $admin->created_by->name ?? '-' }}
                                 </div>
                             </div>
                             <div class="flex items-center p-2 gap-4">
                                 <div>Updated At:</div>
                                 <div>
-                                    {{ $item->updated_at ?? '-' }}
+                                    {{ $admin->updated_at ?? '-' }}
                                 </div>
                             </div>
                             <div class="flex items-center p-2 gap-4">
                                 <div>Updated By:</div>
                                 <div>
-                                    {{ $item->updated_by->name ?? '-' }}
+                                    {{ $admin->updated_by->name ?? '-' }}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="px-4 py-3 sm:px-6 flex gap-5">
                         <div class="flex float-right gap-3 items-center">
-                            <a href="{{ route('items.index') }}"
+                            <a href="{{ route('admins.index') }}"
                                 class="inline-flex underline items-center px-4 py-2 text-sm text-gray-800">
                                 Back </a>
-                            <a href="{{ route('items.edit', $item->id) }}"
+                            <a href="{{ route('admins.edit', $admin) }}"
                                 class="inline-flex underline items-center px-4 py-2 text-sm text-gray-800">
                                 Edit
                             </a>

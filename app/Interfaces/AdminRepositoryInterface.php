@@ -13,7 +13,7 @@ interface AdminRepositoryInterface
 
     public function store(array $data, array $roles): User;
 
-    public function update(User $user, array $data): User;
+    public function update(User $user, array $data, array $roles): User;
 
     public function show(User $user): User;
 }

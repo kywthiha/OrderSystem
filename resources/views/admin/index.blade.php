@@ -56,7 +56,9 @@
                             @forelse ($users as $user)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <td scope="row" class="py-4 px-6">
-                                        #{{ $user->id }}
+                                        <a href="{{ route('admins.show', $user) }}">
+                                            #{{ $user->id }}
+                                        </a>
                                     </td>
                                     <td scope="row" class="py-4 px-6">
                                         {{ $user->name }}
@@ -68,7 +70,7 @@
                                         {{ $user->created_at }}
                                     </td>
                                     <td scope="row" class="py-4 px-6">
-                                        {{ $user->created_user_name ?? '-' }}
+                                        {{ $user->created_by->name ?? '-' }}
                                     </td>
                                     <td class="py-4 px-6 text-right">
                                         <div class="flex float-right gap-3 items-center">
@@ -77,7 +79,7 @@
                                                 Edit
                                             </a>
 
-
+                                            @if (Auth::id() != $user->id)
                                             <form method="POST" action="{{ route('admins.destroy', $user->id) }}"
                                                 onsubmit="return confirm('Are you sure delete?');">
                                                 @csrf
@@ -87,6 +89,7 @@
                                                     Delete
                                                 </button>
                                             </form>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

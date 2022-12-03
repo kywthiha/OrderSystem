@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Mockery\CountValidator\Exception;
 
 class AdminRepository implements AdminRepositoryInterface
 {
@@ -22,7 +23,15 @@ class AdminRepository implements AdminRepositoryInterface
 
     public function delete(User $user): void
     {
-        $user->delete();
+        DB::beginTransaction();
+        try {
+            $user->roles()->detach();
+            $user->delete();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
 
     public function store(array $data, array $roles): User
@@ -34,6 +43,7 @@ class AdminRepository implements AdminRepositoryInterface
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'is_admin' => true,
+                "created_user" => $data['created_user']
             ]);
             $user->roles()->attach($roles);
             DB::commit();
@@ -44,15 +54,31 @@ class AdminRepository implements AdminRepositoryInterface
         }
     }
 
-    public function update(User $user, array $data): User
+    public function update(User $user, array $data, array $roles): User
     {
-        $user->update($data);
-        return $user;
+        DB::beginTransaction();
+        try {
+            $updatedData = [
+                'name' => $data['name'],
+                'email' => $data['email'],
+                "updated_user" => $data['updated_user']
+            ];
+            if (isset($data['password'])) {
+                $updatedData['password'] = Hash::make($data['password']);
+            }
+            $user->update($updatedData);
+            $user->roles()->sync($roles);
+            DB::commit();
+            return $user;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
 
     public function show(User $user): User
     {
-        $user->load(['created_by:id,name', 'updated_by:id,name', 'category:id,name', 'subCategory:id,name']);
+        $user->load(['created_by:id,name', 'updated_by:id,name', 'roles.permissions']);
         return $user;
     }
 }
