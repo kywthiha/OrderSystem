@@ -36,6 +36,30 @@ class UserRepository implements UserRepositoryInterface
             ->search($search)
             ->order($sort)
             ->filter($filter)
+            ->isUser()
             ->paginate(10);
+    }
+
+    public function update(User $user, array $data): User
+    {
+        $columns = ['name', 'email', 'is_activate'];
+        $updatedData = [
+            "updated_user" => $data['updated_user']
+        ];
+        if (isset($data['password'])) {
+            $updatedData['password'] = Hash::make($data['password']);
+        }
+        foreach ($columns as $column) {
+            if (isset($data[$column])) {
+                $updatedData[$column] = $data[$column];
+            }
+        }
+        $user->update($updatedData);
+        return $user;
+    }
+
+    public function delete(User $user): void
+    {
+        $user->delete();
     }
 }

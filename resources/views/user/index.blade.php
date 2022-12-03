@@ -24,9 +24,21 @@
                                 </th>
                                 <th scope="col" class="py-3 px-6 text-left ">
                                     <div class="flex">
+                                        Email
+                                        <x-sort-link sortKey="email" />
+                                    </div>
+                                </th>
+                                <th scope="col" class="py-3 px-6 text-left ">
+                                    <div class="flex">
                                         Created At
                                         <x-sort-link sortKey="created_at" />
                                     </div>
+                                <th scope="col" class="py-3 px-6 text-left ">
+                                    <div class="flex">
+                                        Activate
+                                        <x-sort-link sortKey="email" />
+                                    </div>
+                                </th>
                                 <th scope="col" class="py-3 px-6 text-right">
                                     Action
                                 </th>
@@ -42,11 +54,28 @@
                                         {{ $user->name }}
                                     </td>
                                     <td scope="row" class="py-4 px-6">
+                                        {{ $user->email }}
+                                    </td>
+                                    <td scope="row" class="py-4 px-6">
                                         {{ $user->created_at }}
+                                    </td>
+                                    <td class="py-4 px-6 text-center">
+                                        <div class="flex justify-center gap-3 items-center">
+                                            <form method="POST" action="{{ route('users.update', $user) }}">
+                                                @csrf
+                                                @method('PUT')
+                                                <input value="0" type="hidden" name="is_activate">
+                                                <input onchange="this.form.submit()" value="1" type="checkbox"
+                                                    name="is_activate" {{ $user->is_activate ? 'checked' : '' }}>
+
+
+                                            </form>
+                                        </div>
                                     </td>
                                     <td class="py-4 px-6 text-right">
                                         <div class="flex float-right gap-3 items-center">
-                                            <form method="POST" onsubmit="return confirm('Are you sure delete?');">
+                                            <form method="POST" onsubmit="return confirm('Are you sure delete?');"
+                                                action="{{ route('users.destroy', $user) }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
@@ -58,9 +87,7 @@
                                     </td>
                                 </tr>
                             @empty
-                                <p>Empty User</p>
                             @endforelse
-
 
                         </tbody>
                     </table>
