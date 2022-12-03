@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements UserRepositoryInterface
@@ -27,5 +28,14 @@ class UserRepository implements UserRepositoryInterface
     public function logout(User $user): void
     {
         $user->token()->revoke();
+    }
+
+    public function getAll(string $search = null, $sort, $filter = null): LengthAwarePaginator
+    {
+        return User::query()
+            ->search($search)
+            ->order($sort)
+            ->filter($filter)
+            ->paginate(10);
     }
 }

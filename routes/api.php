@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ItemController;
 use App\Http\Controllers\Api\SubCategoryController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*

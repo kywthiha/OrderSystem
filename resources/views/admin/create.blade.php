@@ -3,7 +3,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <form action="{{ route('items.store') }}" method="POST">
+                    <form action="{{ route('admins.store') }}" method="POST">
                         @csrf
                         @method('POST')
                         <div class=" overflow-hidden sm:rounded-md">
@@ -14,10 +14,10 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div class="col-span-1">
                                         <div class="text-lg font-bold">
-                                            Item Info
+                                            User Info
                                         </div>
                                         <div class="mt-3">
-                                            <label htmlFor="name" class="block text-sm font-semibold ">
+                                            <label class="block text-sm font-semibold ">
                                                 Name
                                                 <span class="text-red-700 ml-2 text-xs">
                                                     (Required)
@@ -28,40 +28,45 @@
                                                 class="mt-1 focus:ring-cyan-500 focus:border-cyan-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                                         </div>
                                         <div class="mt-3">
-                                            <label htmlFor="name" class="block text-sm font-semibold ">
-                                                Price
+                                            <label class="block text-sm font-semibold ">
+                                                Email
                                                 <span class="text-red-700 ml-2 text-xs">
                                                     (Required)
                                                 </span>
                                             </label>
-                                            <input required type="number" name="price" value="{{ old('price', '') }}"
+                                            <input required type="email" name="email" value="{{ old('email', '') }}"
                                                 class="mt-1 focus:ring-cyan-500 focus:border-cyan-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                                         </div>
-                                        <category-subcategory-input :categories='@json($categories)'
-                                            selected-category-id="{{ old('category_id', null) }}"
-                                            selected-sub-category-id="{{ old('sub_category_id', null) }}"
-                                            :sub-categories='@json($subCategories)'></category-subcategory-input>
                                         <div class="mt-3">
-                                            <label htmlFor="name" class="block text-sm font-semibold ">
-                                                Description
-
+                                            <label class="block text-sm font-semibold ">
+                                                Password
+                                                <span class="text-red-700 ml-2 text-xs">
+                                                    (Required)
+                                                </span>
                                             </label>
-                                            <textarea name="description" value="{{ old('description', '') }}"
-                                                class="mt-1 focus:ring-cyan-500 focus:border-cyan-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                            ></textarea>
+                                            <input required type="password" name="password"
+                                                class="mt-1 focus:ring-cyan-500 focus:border-cyan-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                                        </div>
 
+                                        <div class="mt-3">
+                                            <label class="block text-sm font-semibold ">
+                                                Confirm Password
+                                                <span class="text-red-700 ml-2 text-xs">
+                                                    (Required)
+                                                </span>
+                                            </label>
+                                            <input required type="password" name="password_confirmation"
+                                                class="mt-1 focus:ring-cyan-500 focus:border-cyan-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
                             <div class="px-4 py-3 sm:px-6">
-                                <x-button class="capitalize">Add Item</x-button>
+                                <x-button class="capitalize">Add User</x-button>
                             </div>
                         </div>
                     </form>
-
-
                 </div>
             </div>
         </div>

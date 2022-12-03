@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,8 +26,12 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-Route::resource("categories",CategoryController::class);
-Route::resource("subcategories",SubCategoryController::class);
-Route::resource("items",ItemController::class);
+Route::group(['middleware' => ['auth','admin.auth']], function () {
+    Route::resource("categories", CategoryController::class);
+    Route::resource("subcategories", SubCategoryController::class);
+    Route::resource("items", ItemController::class);
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::resource("admins", AdminController::class);
+});

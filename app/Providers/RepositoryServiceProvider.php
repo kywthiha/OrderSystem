@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Interfaces\ActivityLogRepositoryInterface;
+use App\Interfaces\AdminRepositoryInterface;
 use App\Interfaces\CategoryRepositoryInterface;
 use App\Interfaces\ItemRepositoryInterface;
 use App\Interfaces\OrderRepositoryInterface;
@@ -11,6 +12,7 @@ use App\Interfaces\PromoCodeRepositoryInterface;
 use App\Interfaces\SubCategoryRepositoryInterface;
 use App\Interfaces\UserRepositoryInterface;
 use App\Repositories\ActivityLogRepository;
+use App\Repositories\AdminRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\ItemRepository;
 use App\Repositories\OrderRepository;
@@ -44,6 +46,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(SubCategoryRepositoryInterface::class, SubCategoryRepository::class);
 
         $this->app->bind(ItemRepositoryInterface::class, ItemRepository::class);
+
+        $this->app->bind(AdminRepositoryInterface::class, AdminRepository::class);
     }
 
     /**

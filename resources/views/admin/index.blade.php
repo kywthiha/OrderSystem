@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-search>
-        <x-nav-link :href="route('items.create')">
-            {{ __('New Item') }}
+        <x-nav-link :href="route('admins.create')">
+            {{ __('New User') }}
         </x-nav-link>
     </x-search>
     <div class="py-2">
@@ -28,15 +28,10 @@
                                 </th>
                                 <th scope="col" class="py-3 px-6 text-left ">
                                     <div class="flex">
-                                        Category
-                                        <x-sort-link sortKey="category_name" />
+                                        Email
+                                        <x-sort-link sortKey="email" />
                                     </div>
-                                </th>
-                                <th scope="col" class="py-3 px-6 text-left ">
-                                    <div class="flex">
-                                        SubCategory
-                                        <x-sort-link sortKey="sub_category_name" />
-                                    </div>
+
                                 </th>
                                 <th scope="col" class="py-3 px-6 text-left ">
                                     <div class="flex">
@@ -58,38 +53,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($items as $item)
+                            @forelse ($users as $user)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <td scope="row" class="py-4 px-6">
-                                        <a href="{{ route('items.show', $item) }}" class="underline">
-                                            #{{ $item->id }}
-                                        </a>
+                                        #{{ $user->id }}
                                     </td>
                                     <td scope="row" class="py-4 px-6">
-                                        {{ $item->name }}
+                                        {{ $user->name }}
                                     </td>
                                     <td scope="row" class="py-4 px-6">
-                                        {{ $item->category_name }}
+                                        {{ $user->email }}
                                     </td>
                                     <td scope="row" class="py-4 px-6">
-                                        {{ $item->sub_category_name }}
+                                        {{ $user->created_at }}
                                     </td>
                                     <td scope="row" class="py-4 px-6">
-                                        {{ $item->created_at }}
-                                    </td>
-                                    <td scope="row" class="py-4 px-6">
-                                        {{ $item->created_user_name ?? '-' }}
+                                        {{ $user->created_user_name ?? '-' }}
                                     </td>
                                     <td class="py-4 px-6 text-right">
                                         <div class="flex float-right gap-3 items-center">
-                                            <a href="{{ route('items.edit', $item->id) }}"
+                                            <a href="{{ route('admins.edit', $user->id) }}"
                                                 class="inline-flex underline items-center px-4 py-2 text-sm text-gray-800">
                                                 Edit
                                             </a>
 
 
-                                            <form method="POST"
-                                                action="{{ route('items.destroy', $item->id) }}"
+                                            <form method="POST" action="{{ route('admins.destroy', $user->id) }}"
                                                 onsubmit="return confirm('Are you sure delete?');">
                                                 @csrf
                                                 @method('DELETE')
@@ -102,14 +91,14 @@
                                     </td>
                                 </tr>
                             @empty
-                                <p>Empty Item</p>
+                                <p>Empty Users</p>
                             @endforelse
 
 
                         </tbody>
                     </table>
                     <div class="py-6">
-                        {{ $items->withQueryString()->links() }}
+                        {{ $users->withQueryString()->links() }}
                     </div>
                 </div>
             </div>

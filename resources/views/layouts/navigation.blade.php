@@ -24,8 +24,24 @@
                     <x-nav-link :href="route('items.index')" :active="request()->routeIs('items.*')">
                         {{ __('Items') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                        {{ __('Users') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admins.index')" :active="request()->routeIs('admins.*')">
+                        {{ __('Admins') }}
+                    </x-nav-link>
                 </div>
             </div>
+
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+
+                <x-dropdown-link :href="route('logout')"
+                        onclick="event.preventDefault();
+                                    this.closest('form').submit();">
+                    {{ __('Log Out') }}
+                </x-dropdown-link>
+            </form>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -83,6 +99,12 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('items.index')" :active="request()->routeIs('items.*')">
                 {{ __('Items') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                {{ __('Users') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admins.index')" :active="request()->routeIs('admins.*')">
+                {{ __('Admins') }}
             </x-responsive-nav-link>
         </div>
 

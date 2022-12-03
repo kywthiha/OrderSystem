@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -41,4 +41,45 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function scopeSearch($query, string $search = null)
+    {
+        if ($search) {
+            return $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+        return $query;
+    }
+
+    public function scopeOrder($query,  $data)
+    {
+        if ($data && is_array($data)) {
+            foreach ($data as $key => $value) {
+                $query->orderBy($key, $value);
+            }
+        }
+    }
+
+    public function scopeFilter($query,  $data)
+    {
+        if ($data && is_array($data)) {
+            foreach ($data as $key => $value) {
+                if ($value) {
+                    $query->where($key, $value);
+                }
+            }
+        }
+    }
+
+    public function scopeIsAdmin($query)
+    {
+        return $query->where('is_admin', true);
+    }
+
+    public function scopeIsUser($query)
+    {
+        return $query->where('is_admin', false);
+    }
 }
